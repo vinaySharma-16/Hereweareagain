@@ -1,0 +1,239 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Nunito:wght@400;500;600&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body, html { background: transparent; }
+
+  #app {
+    min-height: 480px;
+    background: #f5f0e8;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Nunito', sans-serif;
+  }
+
+  .flower-left, .flower-right {
+    position: absolute;
+    bottom: 0;
+    width: 160px;
+    pointer-events: none;
+  }
+  .flower-left { left: -10px; }
+  .flower-right { right: -10px; }
+
+  .cat {
+    font-size: 52px;
+    line-height: 1;
+    margin-bottom: 6px;
+    animation: bounce 2s infinite ease-in-out;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  .heart {
+    font-size: 18px;
+    color: #e87c8f;
+    margin-bottom: 2px;
+    text-align: center;
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.25); }
+  }
+
+  .title {
+    font-family: 'Caveat', cursive;
+    font-size: 52px;
+    font-weight: 700;
+    color: #1a1a1a;
+    text-align: center;
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+
+  .subtitle {
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    color: #666;
+    text-align: center;
+    margin-bottom: 28px;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+  }
+
+  .btn-row {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .btn {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 14px 32px;
+    border-radius: 50px;
+    border: 2.5px solid #7a1a1a;
+    background: transparent;
+    color: #1a1a1a;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .btn:hover { background: #7a1a1a; color: #f5f0e8; }
+  .btn:active { transform: scale(0.97); }
+
+  .screen { display: none; }
+  .screen.active { display: flex; flex-direction: column; align-items: center; }
+
+  .slide-in {
+    animation: slideIn 0.4s ease forwards;
+  }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+
+<div id="app">
+
+  <svg class="flower-left" viewBox="0 0 160 220" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="60" cy="200" rx="18" ry="60" fill="#2d6a2d" transform="rotate(-20 60 200)"/>
+    <ellipse cx="80" cy="190" rx="14" ry="50" fill="#3a8a3a" transform="rotate(10 80 190)"/>
+    <ellipse cx="40" cy="185" rx="22" ry="15" fill="#4caf50" transform="rotate(-40 40 185)"/>
+    <circle cx="70" cy="110" r="32" fill="#c0392b"/>
+    <circle cx="50" cy="90" r="26" fill="#922b21"/>
+    <circle cx="90" cy="100" r="22" fill="#a93226"/>
+    <circle cx="68" cy="80" r="18" fill="#e74c3c"/>
+    <circle cx="88" cy="85" r="14" fill="#cd6155"/>
+  </svg>
+
+  <svg class="flower-right" viewBox="0 0 160 220" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="90" cy="200" rx="16" ry="55" fill="#2d6a2d" transform="rotate(15 90 200)"/>
+    <ellipse cx="70" cy="195" rx="14" ry="48" fill="#3a8a3a" transform="rotate(-10 70 195)"/>
+    <ellipse cx="110" cy="185" rx="20" ry="14" fill="#4caf50" transform="rotate(35 110 185)"/>
+    <ellipse cx="85" cy="90" rx="35" ry="32" fill="#d4a0a0"/>
+    <ellipse cx="105" cy="75" rx="22" ry="28" fill="#c48080"/>
+    <ellipse cx="65" cy="80" rx="20" ry="25" fill="#e8b4b4"/>
+    <circle cx="85" cy="95" r="12" fill="#f0c040"/>
+    <circle cx="88" cy="92" r="8" fill="#e6a820"/>
+  </svg>
+
+  <div id="screen1" class="screen active">
+    <div class="heart">♥</div>
+    <div class="cat">🐱</div>
+    <div class="title">Are you angry<br>with me?</div>
+    <div class="subtitle">please be honest with me...</div>
+    <div class="btn-row">
+      <button class="btn" id="yesBtn1" onclick="goToScreen2()">Yes</button>
+      <button class="btn" id="noBtn1" onclick="sayHappy()">No</button>
+    </div>
+  </div>
+
+  <div id="screen2" class="screen">
+    <div class="heart">♥</div>
+    <div class="cat">🐱</div>
+    <div class="title" id="screen2Title">But I'm reading your<br>books you suggested...<br>Are you still mad<br>with me, Love?</div>
+    <div class="subtitle" id="screen2Sub">i'm really trying my best...</div>
+    <div class="btn-row" id="screen2Btns">
+      <button class="btn" id="yesBtn2" onclick="makeYesSmaller()">Yes</button>
+      <button class="btn" id="noBtn2" onclick="sayHappy()">No</button>
+    </div>
+  </div>
+
+  <div id="screen3" class="screen">
+    <div class="heart">♥</div>
+    <div class="cat">🥺🐱</div>
+    <div class="title">Okay fine I'll<br>read faster... 🥹</div>
+    <div class="subtitle">but please stop being mad at me :(</div>
+    <div class="btn-row">
+      <button class="btn" onclick="sayHappy()">Okay fine, I forgive you 💕</button>
+    </div>
+  </div>
+
+  <div id="screen4" class="screen">
+    <div class="heart">♥</div>
+    <div class="cat">🥰🐱</div>
+    <div class="title">Yayyyy!! 🎉<br>I love you so much!</div>
+    <div class="subtitle">you're the best thing ever ♥</div>
+  </div>
+
+</div>
+
+<script>
+  let yesPressCount = 0;
+  let yesFontSize = 13;
+  let noFontSize = 13;
+
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => {
+      s.classList.remove('active');
+    });
+    const el = document.getElementById(id);
+    el.classList.add('active');
+    el.classList.add('slide-in');
+    setTimeout(() => el.classList.remove('slide-in'), 500);
+  }
+
+  function goToScreen2() {
+    showScreen('screen2');
+    yesFontSize = 13;
+    noFontSize = 13;
+    document.getElementById('yesBtn2').style.fontSize = '13px';
+    document.getElementById('noBtn2').style.fontSize = '13px';
+    document.getElementById('yesBtn2').style.padding = '14px 32px';
+    document.getElementById('noBtn2').style.padding = '14px 32px';
+  }
+
+  function makeYesSmaller() {
+    yesPressCount++;
+
+    yesFontSize = Math.max(8, yesFontSize - 2);
+    noFontSize = Math.min(22, noFontSize + 3);
+
+    const yesBtn = document.getElementById('yesBtn2');
+    const noBtn = document.getElementById('noBtn2');
+
+    yesBtn.style.fontSize = yesFontSize + 'px';
+    yesBtn.style.padding = Math.max(6, 14 - yesPressCount * 2) + 'px ' + Math.max(12, 32 - yesPressCount * 4) + 'px';
+
+    noBtn.style.fontSize = noFontSize + 'px';
+    noBtn.style.padding = (14 + yesPressCount * 2) + 'px ' + (32 + yesPressCount * 4) + 'px';
+
+    if (yesPressCount >= 4) {
+      showScreen('screen3');
+      yesPressCount = 0;
+    } else {
+      const sub = document.getElementById('screen2Sub');
+      const msgs = [
+        "i really am trying...",
+        "please forgive me 🥺",
+        "the no button is right there...",
+        "it's getting bigger for a reason 👀"
+      ];
+      sub.textContent = msgs[Math.min(yesPressCount - 1, msgs.length - 1)];
+    }
+  }
+
+  function sayHappy() {
+    showScreen('screen4');
+  }
+</script>
